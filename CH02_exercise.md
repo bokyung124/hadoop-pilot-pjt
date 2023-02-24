@@ -381,4 +381,3 @@ hostname
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdZBgvU%2FbtrVfs1k6eZ%2F49303KXuRdsp93P37fqX41%2Fimg.png)
 
 - Host name과 Saved Sessions을 적고 Save로 저장해둠
-
