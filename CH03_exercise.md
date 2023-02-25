@@ -1,46 +1,46 @@
-# 1. Flume ì„¤ì¹˜
-- CM í™ˆì—ì„œ [ì„œë¹„ìŠ¤ ì¶”ê°€] - [Flume] ì„ íƒ
+# 1. Flume ¼³Ä¡
+- CM È¨¿¡¼­ [¼­ºñ½º Ãß°¡] - [Flume] ¼±ÅÃ
 ![](/img/CH03/flume%20%EC%84%A4%EC%B9%98.png)   
-- ì„œë²„ í˜¸ìŠ¤íŠ¸ `server02.hadoop.com` ì„ íƒ
+- ¼­¹ö È£½ºÆ® `server02.hadoop.com` ¼±ÅÃ
 
 <br>
 
-- __Flume Heap Memory ìˆ˜ì •__
+- __Flume Heap Memory ¼öÁ¤__
     - 50Mib -> __100MiB__
     ![](img/CH03/flume%20heap%20memory%20%EB%B3%80%EA%B2%BD.png)   
 
 <br>
 
-# 2. Kafka ì„¤ì¹˜
-- CM í™ˆì—ì„œ [ì„œë¹„ìŠ¤ ì¶”ê°€] - [Kafka] ì„ íƒ
+# 2. Kafka ¼³Ä¡
+- CM È¨¿¡¼­ [¼­ºñ½º Ãß°¡] - [Kafka] ¼±ÅÃ
 ![](img/CH03/kafka%20%EC%84%A4%EC%B9%98.png)   
-- ì„œë²„ í˜¸ìŠ¤íŠ¸ `server02.hadoop.com` ì„ íƒ
+- ¼­¹ö È£½ºÆ® `server02.hadoop.com` ¼±ÅÃ
 
 <br>
 
-- __ì¹´í”„ì¹´ì— ì €ì¥ë  ë©”ì‹œì§€ ë³´ê´€ ê¸°ê°„ ì§§ê²Œ ì¡°ì •__
-    - `Data Retention Time` 7ì¼ -> __10ë¶„__
+- __Ä«ÇÁÄ«¿¡ ÀúÀåµÉ ¸Ş½ÃÁö º¸°ü ±â°£ Âª°Ô Á¶Á¤__
+    - `Data Retention Time` 7ÀÏ -> __10ºĞ__
     ![](img/CH03/kafka%20data%20retention%20time%20%EB%B3%80%EA%B2%BD.png)
 
 <br>
 
-# 3. í”ŒëŸ¼ ìˆ˜ì§‘ ê¸°ëŠ¥ êµ¬í˜„
-- í”ŒëŸ¼ì—ì„œ 2ê°œì˜ ì—ì´ì „íŠ¸ êµ¬í˜„
-    - ìŠ¤ë§ˆíŠ¸ì¹´ ìƒíƒœì •ë³´ ìˆ˜ì§‘í•˜ëŠ” `SmartCarInfo Agent`
-    - ìš´ì „ìì˜ ìš´í–‰ì •ë³´ ìˆ˜ì§‘í•˜ëŠ” `DriverCarInfo Agent`
+# 3. ÇÃ·³ ¼öÁı ±â´É ±¸Çö
+- ÇÃ·³¿¡¼­ 2°³ÀÇ ¿¡ÀÌÀüÆ® ±¸Çö
+    - ½º¸¶Æ®Ä« »óÅÂÁ¤º¸ ¼öÁıÇÏ´Â `SmartCarInfo Agent`
+    - ¿îÀüÀÚÀÇ ¿îÇàÁ¤º¸ ¼öÁıÇÏ´Â `DriverCarInfo Agent`
 
-- ì—ì´ì „íŠ¸ ìƒì„± 
-  - í”ŒëŸ¼ì´ ì¸ì‹í•  ìˆ˜ ìˆëŠ” íŠ¹ì • ë””ë ‰í„°ë¦¬ì— `{Agent ê³ ìœ  ì´ë¦„}.conf` íŒŒì¼ ìƒì„±
-  - íŒŒì¼ëŸ¿ í”„ë¡œì íŠ¸ì—ì„œëŠ” CMì—ì„œ ì œê³µí•˜ëŠ” í”ŒëŸ¼ êµ¬ì„± ì •ë³´ ì„¤ì •ì„ í†µí•´ ì—ì´ì „íŠ¸ í¸ë¦¬í•˜ê²Œ ìƒì„± ê°€ëŠ¥
+- ¿¡ÀÌÀüÆ® »ı¼º 
+  - ÇÃ·³ÀÌ ÀÎ½ÄÇÒ ¼ö ÀÖ´Â Æ¯Á¤ µğ·ºÅÍ¸®¿¡ `{Agent °íÀ¯ ÀÌ¸§}.conf` ÆÄÀÏ »ı¼º
+  - ÆÄÀÏ·µ ÇÁ·ÎÁ§Æ®¿¡¼­´Â CM¿¡¼­ Á¦°øÇÏ´Â ÇÃ·³ ±¸¼º Á¤º¸ ¼³Á¤À» ÅëÇØ ¿¡ÀÌÀüÆ® Æí¸®ÇÏ°Ô »ı¼º °¡´É
 
-## 1) SmartCar ì—ì´ì „íŠ¸ ìƒì„±
-- CM í™ˆ [Flume] - [êµ¬ì„±]
-- `êµ¬ì„± íŒŒì¼` í•­ëª© ìˆ˜ì •
+## 1) SmartCar ¿¡ÀÌÀüÆ® »ı¼º
+- CM È¨ [Flume] - [±¸¼º]
+- `±¸¼º ÆÄÀÏ` Ç×¸ñ ¼öÁ¤
 
 <br>
 
-- Agent ì´ë¦„: `SmartCar_Agent`
-- êµ¬ì„± íŒŒì¼   
+- Agent ÀÌ¸§: `SmartCar_Agent`
+- ±¸¼º ÆÄÀÏ   
 ```conf
 #1
 SmartCar_Agent.sources  = SmartCarInfo_SpoolSource
@@ -66,5 +66,247 @@ SmartCar_Agent.sources.SmartCarInfo_SpoolSource.channels = SmartCarInfo_Channel
 SmartCar_Agent.sinks.SmartCarInfo_LoggerSink.channel = SmartCarInfo_Channel
 ```
 
-- `1` 
-  - í”ŒëŸ¼ì˜ ì—ì´ì „íŠ¸ì—ì„œ ì‚¬ìš©í• 
+- #1
+  - ÇÃ·³ÀÇ ¿¡ÀÌÀüÆ®¿¡¼­ »ç¿ëÇÒ Source, Channle, SinkÀÇ °¢ ¸®¼Ò½º º¯¼ö Á¤ÀÇ
+- #2
+	- ¿¡ÀÌÀüÆ®ÀÇ Source ¼³Á¤
+	- #1¿¡¼­ Source·Î ¼±¾ğÇß´ø `SmartCarInfo_SpoolSource` º¯¼öÀÇ typeÀ» `spooldir`·Î ¼³Á¤
+	- `spooldir` : ÁöÁ¤ÇÑ Æ¯Á¤ µğ·ºÅÍ¸®¸¦ ¸ğ´ÏÅÍ¸µÇÏ°í ÀÖ´Ù°¡ »õ·Î¿î ÆÄÀÏÀÌ »ı¼ºµÇ¸é ÀÌº¥Æ®¸¦ °¨ÁöÇØ¼­ `batchSize` ¼³Á¤°ª¸¸Å­ ÀĞ¾î¼­ #3ÀÇ Channel¿¡ µ¥ÀÌÅÍ Àü¼Û
+- #3 
+	- ¿¡ÀÌÀüÆ®ÀÇ Channel·Î¼­ `SmartCarInfo_Channel`ÀÇ typeÀ» `memory`·Î ¼³Á¤
+	- Ã¤³ÎÀÇ Á¾·ù) memory / file
+	- Memory ChannelÀº Source·ÎºÎÅÍ ¹ŞÀº µ¥ÀÌÅÍ¸¦ ¸Ş¸ğ¸® »ó¿¡ Áß°£ ÀûÀç -> ¼º´É ³ôÁö¸¸, ¾ÈÁ¤¼º ³·À½
+	- File ChannelÀº Source¿¡¼­ Àü¼ÛÇÑ µ¥ÀÌÅÍ¸¦ ¹Ş¾Æ ·ÎÄÃ ÆÄÀÏ½Ã½ºÅÛ °æ·ÎÀÎ `dataDirs`¿¡ ÀÓ½Ã·Î ÀúÀåÇß´Ù°¡ Sink¿¡°Ô µ¥ÀÌÅÍ Á¦°ø -> ¼º´É ³·Áö¸¸, ¾ÈÁ¤¼º ³ôÀ½
+- #4
+	- ¿¡ÀÌÀüÆ®ÀÇ ÃÖÁ¾ ¸ñÀûÁö
+	- SmartCarInfo_LoggerSinkÀÇ typeÀ» `logger`·Î ¼³Á¤
+	- Logger Sink´Â ¼öÁıÇÑ µ¥ÀÌÅÍ¸¦ Å×½ºÆ® ¹× µğ¹ö±ë ¸ñÀûÀ¸·Î ÇÃ·³ÀÇ Ç¥ÁØ Ãâ·Â ·Î±× ÆÄÀÏÀÎ `/var/log/flume-ng/flume-cmf-flume-AGENT-server02.hadoop.com.log`¿¡ Ãâ·Â
+- #5
+	- Source¿Í Channel Sink ¿¬°á
+	- ¾Õ¼­ Á¤ÀÇÇÑ SmartCarInfo_SpoolSourceÀÇ Ã¤³Î°ªÀ» `SmartCarInfo_Channel`·Î ¼³Á¤
+	- SmartCarInfo_LoggerSinkÀÇ Ã¤³Î°ªµµ `SmartCarInfo_Channel`·Î ¼³Á¤
+	- File -> Channel -> Sink·Î ÀÌ¾îÁö´Â ¿¡ÀÌÀüÆ® ¸®¼Ò½º¸¦ ÇÏ³ª·Î ¿¬°á
+
+<br>
+
+## 2) SmartCar ¿¡ÀÌÀüÆ®¿¡ Interceptor Ãß°¡
+- `Interceptor` : Source¿Í ChannelÀÇ Áß°£¿¡¼­ µ¥ÀÌÅÍ¸¦ °¡°øÇÏ´Â ¿ªÇÒ
+- ÇÃ·³ÀÇ Source¿¡¼­ À¯ÀÔµÇ´Â µ¥ÀÌÅÍ Áß ÀÏºÎ µ¥ÀÌÅÍ¸¦ ¼öÁ¤ÇÏ°Å³ª ÇÊ¿äÇÑ µ¥ÀÌÅÍ¸¸ ÇÊÅÍ¸µÇÏ´Â µî Áß°£¿¡ µ¥ÀÌÅÍ¸¦ Ãß°¡/°¡°ø/Á¤Á¦ÇÏ´Â µ¥ »ç¿ëµÊ
+- ÇÃ·³¿¡¼­ µ¥ÀÌÅÍ Àü¼Û ´ÜÀ§ `Event` - Header¿Í º»¹® Body·Î ±¸¼ºµÊ
+- Interceptor´Â EventÀÇ Header¿¡ Æ¯Á¤°ªÀ» Ãß°¡ÇÏ°Å³ª Body¿¡ µ¥ÀÌÅÍ¸¦ °¡°øÇÏ´Â ±â´ÉÀ¸·Î È°¿ëµÊ
+
+<br>
+
+- ÆÄÀÏ·µ ÇÁ·ÎÁ§Æ®¿¡¼­´Â SmartCarInfo ·Î±× ÆÄÀÏÀ» ¼öÁıÇÏ´Âµ¥ ÃÑ 4°³ÀÇ Interceptor¸¦ Ãß°¡ÇÒ °Í
+- ÀÌ¹ø Àå¿¡¼­´Â `Filter Interceptor` ÇÏ³ª¸¸ Ãß°¡
+- ¾Õ¼­ ÀÛ¼ºÇÑ SmartCarInfo ¿¡ÀÌÀüÆ® ¼öÁ¤ÇØ¼­ Filter Interceptor »ç¿ë
+
+<br>
+
+- CM È¨ [Flume] - [±¸¼º] - [±¸¼º ÆÄÀÏ]
+- Source¿Í Channel »çÀÌ¿¡ Interceptor Ãß°¡
+```conf
+SmartCar_Agent.sources  = SmartCarInfo_SpoolSource
+SmartCar_Agent.channels = SmartCarInfo_Channel
+SmartCar_Agent.sinks    = SmartCarInfo_LoggerSink 
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.type = spooldir
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.spoolDir = /home/pilot-pjt/working/car-batch-log
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.deletePolicy = immediate
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.batchSize = 1000
+
+#1
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors = filterInterceptor
+
+#2
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.type = regex_filter
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.regex = ^\\d{14}
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.excludeEvents = false
+
+
+SmartCar_Agent.channels.SmartCarInfo_Channel.type = memory
+SmartCar_Agent.channels.SmartCarInfo_Channel.capacity  = 100000
+SmartCar_Agent.channels.SmartCarInfo_Channel.transactionCapacity  = 10000
+
+
+SmartCar_Agent.sinks.SmartCarInfo_LoggerSink.type = logger
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.channels = SmartCarInfo_Channel
+SmartCar_Agent.sinks.SmartCarInfo_LoggerSink.channel = SmartCarInfo_Channel
+```
+
+- #1
+	- ¼öÁı µ¥ÀÌÅÍ¸¦ ÇÊÅÍ¸µÇÏ±â À§ÇØ `filterInterceptor` º¯¼ö¸¦ ¼±¾ğÇØ¼­ SmartCarInfo_SpoolSource¿¡ ÇÒ´ç
+- #2
+	- filterInterceptorÀÇ typeÀ» `regex_filter`·Î ¼³Á¤
+	- Á¤±Ô Ç¥Çö½Ä(Regular Expression)À» ÀÌ¿ëÇØ ¼öÁı µ¥ÀÌÅÍ¸¦ ÇÊÅÍ¸µÇÒ ¶§ À¯¿ëÇÏ°Ô »ç¿ë
+	- ¾Æ·¡ ÀÌ¹ÌÁö¿¡¼­ ½º¸¶Æ®Ä« ·Î±× »ı¼º±â°¡ ¸¸µç ·Î±× ÆÄÀÏ ³»¿ëÀ» º¸¸é, Áß°£¿¡ ·Î±× Æ÷¸ËÀÇ Çü½ÄÀ» ¾Ë¸®´Â ¸ŞÅ¸ Á¤º¸°¡ Æ÷ÇÔµÇ¾î ÀÖÀ½
+	- ÀÌ ¸ŞÅ¸ Á¤º¸¸¦ ¼öÁı µ¥ÀÌÅÍ¿¡¼­ Á¦¿ÜÇÏ°í, ÇÊ¿äÇÑ µ¥ÀÌÅÍ¸¸ ¼öÁıÇØ¾ß ÇÔ
+	- ÀÌ¶§ °£´ÜÇÑ Á¤±Ô Ç¥Çö½ÄÀ» ÀÌ¿ëÇØ¼­ ÇØ°á °¡´É
+		- ½º¸¶Æ®Ä« ·Î±×ÀÇ °æ¿ì) Á¤»óÀûÀÎ ·Î±× µ¥ÀÌÅÍ°¡ ¹ß»ıÇßÀ» ¶§ 14ÀÚ¸®ÀÇ ³¯Â¥ Çü½ÄÀ» °¡Áü
+		- ÀÌ 14ÀÚ¸® ³¯Â¥ Çü½ÄÀ¸·Î ½ÃÀÛÇÏ´Â µ¥ÀÌÅÍ¿¡ ´ëÇÑ Á¤±Ô Ç¥Çö½Ä `^\\d{14}`¸¦ "regex" ¼Ó¼º¿¡ ¼³Á¤
+		- "excludeEvents" ¼Ó¼ºÀÌ __false__ ·Î µÇ¾îÀÖ´Âµ¥, __true__ ·Î ÇÏ¸é ¹İ´ë·Î Á¦¿Ü ´ë»ó¸¸ ¼öÁıÇÏ°Ô µÊ
+
+<br>
+
+## 3) DriverCarInfo ¿¡ÀÌÀüÆ® »ı¼º
+- ¾Õ¼­ ÀÛ¼ºÇÑ SmartCar ¿¡ÀÌÀüÆ®¿¡ DriverCarInfo ¿¡ÀÌÀüÆ®¸¦ À§ÇÑ Source, Channel, Sink¸¦ Ãß°¡ÇÏ¿© »ı¼º
+- ÇÑ °³ÀÇ ÇÃ·³ ¿¡ÀÌÀüÆ® ÆÄÀÏ¿¡ ¿©·¯ °³ÀÇ ¿¡ÀÌÀüÆ®¸¦ ¸¸µé¾î »ç¿ë
+
+<br>
+
+- __DriverCarInfo ¸®¼Ò½º º¯¼ö Ãß°¡__
+```conf
+#1
+SmartCar_Agent.sources  = SmartCarInfo_SpoolSource DriverCarInfo_TailSource
+SmartCar_Agent.channels = SmartCarInfo_Channel DriverCarInfo_Channel
+SmartCar_Agent.sinks    = SmartCarInfo_LoggerSink DriverCarInfo_KafkaSink
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.type = spooldir
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.spoolDir = /home/pilot-pjt/working /car-batch-log
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.deletePolicy = immediate
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.batchSize = 1000
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors = filterInterceptor
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.type = regex_filter
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.regex = ^\\d{14}
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.excludeEvents = false
+
+
+SmartCar_Agent.channels.SmartCarInfo_Channel.type = memory
+SmartCar_Agent.channels.SmartCarInfo_Channel.capacity  = 100000
+SmartCar_Agent.channels.SmartCarInfo_Channel.transactionCapacity  = 10000
+
+
+SmartCar_Agent.sinks.SmartCarInfo_LoggerSink.type = logger
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.channels = SmartCarInfo_Channel
+SmartCar_Agent.sinks.SmartCarInfo_LoggerSink.channel = SmartCarInfo_Channel
+```
+- #1
+	- ¿¡ÀÌÀüÆ®ÀÇ Source, Channel, Sink¿¡ DriverCarInfo ¸®¼Ò½º º¯¼ö Ãß°¡
+
+<br>
+
+- __DriverCarInfo ¼³Á¤ Ãß°¡__
+
+```conf
+SmartCar_Agent.sources  = SmartCarInfo_SpoolSource DriverCarInfo_TailSource
+SmartCar_Agent.channels = SmartCarInfo_Channel DriverCarInfo_Channel
+SmartCar_Agent.sinks    = SmartCarInfo_LoggerSink DriverCarInfo_KafkaSink
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.type = spooldir
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.spoolDir = /home/pilot-pjt/working/car-batch-log
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.deletePolicy = immediate
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.batchSize = 1000
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors = filterInterceptor
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.type = regex_filter
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.regex = ^\\d{14}
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.interceptors.filterInterceptor.excludeEvents = false
+
+
+SmartCar_Agent.channels.SmartCarInfo_Channel.type = memory
+SmartCar_Agent.channels.SmartCarInfo_Channel.capacity  = 100000
+SmartCar_Agent.channels.SmartCarInfo_Channel.transactionCapacity  = 10000
+
+
+SmartCar_Agent.sinks.SmartCarInfo_LoggerSink.type = logger
+
+SmartCar_Agent.sources.SmartCarInfo_SpoolSource.channels = SmartCarInfo_Channel
+SmartCar_Agent.sinks.SmartCarInfo_LoggerSink.channel = SmartCarInfo_Channel
+
+#1
+SmartCar_Agent.sources.DriverCarInfo_TailSource.type = exec
+SmartCar_Agent.sources.DriverCarInfo_TailSource.command = tail -F /home/pilot-pjt/working/driver-realtime-log/SmartCarDriverInfo.log
+SmartCar_Agent.sources.DriverCarInfo_TailSource.restart = true
+SmartCar_Agent.sources.DriverCarInfo_TailSource.batchSize = 1000
+
+SmartCar_Agent.sources.DriverCarInfo_TailSource.interceptors = filterInterceptor2
+
+#2
+SmartCar_Agent.sources.DriverCarInfo_TailSource.interceptors.filterInterceptor2.type = regex_filter
+SmartCar_Agent.sources.DriverCarInfo_TailSource.interceptors.filterInterceptor2.regex = ^\\d{14}
+SmartCar_Agent.sources.DriverCarInfo_TailSource.interceptors.filterInterceptor2.excludeEvents = false
+
+#3
+SmartCar_Agent.sinks.DriverCarInfo_KafkaSink.type = org.apache.flume.sink.kafka.KafkaSink
+SmartCar_Agent.sinks.DriverCarInfo_KafkaSink.topic = SmartCar-Topic
+SmartCar_Agent.sinks.DriverCarInfo_KafkaSink.brokerList = server02.hadoop.com:9092
+SmartCar_Agent.sinks.DriverCarInfo_KafkaSink.requiredAcks = 1
+SmartCar_Agent.sinks.DriverCarInfo_KafkaSink.batchSize = 1000
+
+#4
+SmartCar_Agent.channels.DriverCarInfo_Channel.type = memory
+SmartCar_Agent.channels.DriverCarInfo_Channel.capacity= 100000
+SmartCar_Agent.channels.DriverCarInfo_Channel.transactionCapacity = 10000
+
+#5
+SmartCar_Agent.sources.DriverCarInfo_TailSource.channels = DriverCarInfo_Channel
+SmartCar_Agent.sinks.DriverCarInfo_KafkaSink.channel = DriverCarInfo_Channel
+```
+
+- ¾Õ¼­ ¼±¾ğÇÑ SmartCarInfo ¿¡ÀÌÀüÆ®¿Í À¯»çÇÏ°Ô Source, Interceptor, Channel, Sink ¼ø¼­´ë·Î Á¤ÀÇ
+- ÀÏºÎ Source¿Í Sink À¯ÇüÀÌ ´Ş¶óÁü
+
+<br>
+
+- #1 
+	- SourceÀÇ typeÀÌ `exec`
+	- `exec`´Â ÇÃ·³ ¿ÜºÎ¿¡¼­ ¼öÇàÇÑ ¸í·ÉÀÇ °á°ú¸¦ ÇÃ·³ÀÇ Event·Î °¡Á®¿Í ¼öÁıÇÒ ¼ö ÀÖ´Â ±â´É Á¦°ø
+	- ½º¸¶Æ®Ä« ¿îÀüÀÚÀÇ ¿îÇà Á¤º¸°¡ ·Î±× ½Ã¹Ä·¹ÀÌÅÍ¸¦ ÅëÇØ `/home/pilot-pjt/working/driver-realtime-log/SmartCarDriverInfo.log`¿¡ »ı¼º
+	-> ¸®´ª½ºÀÇ `tail` ¸í·ÉÀ» ÇÃ·³ÀÇ `exec`¸¦ ½ÇÇàÇØ¼­ ¿îÀüÀÚÀÇ ½Ç½Ã°£ ¿îÇà Á¤º¸ ¼öÁı
+
+- #2
+	- Interceptor Á¤ÀÇ 
+	- µ¥ÀÌÅÍ ÇÊÅÍ¸µÀ» À§ÇÑ `regex_filter`¸¸ Ãß°¡
+
+- #3
+	- ½º¸¶Æ®Ä« ¿îÀüÀÚÀÇ ½Ç½Ã°£ ¿îÇà Á¤º¸´Â ÇÃ·³¿¡¼­ ¼öÁı°ú µ¿½Ã¿¡ Ä«ÇÁÄ«·Î Àü¼Û
+	- ÇÃ·³ÀÇ `KafkaSink`ÀÇ ³»¿ëÀ» º¸¸é, Ä«ÇÁÄ« ºê·ÎÄ¿ ¼­¹ö°¡ ½ÇÇàÁßÀÎ server02.hadoop.com:9092¿¡ ¿¬°áÇØ¼­ SmartCar-Topic¿¡ µ¥ÀÌÅÍ¸¦ 100°³ÀÇ ¹èÄ¡ Å©±â·Î Àü¼Û
+
+- #4
+	- DriverCarInfoÀÇ ChannelÀ» `Memory Channel`·Î ¼±¾ğ
+
+- #5
+	- DriverCarInfoÀÇ Source¿Í SinkÀÇ ChannelÀ» ¾Õ¼­ Á¤ÀÇÇÑ DriverCarInfo_Channel·Î ¼³Á¤ÇØ¼­ Source-Channel-Sink ±¸Á¶ ¿Ï¼º
+
+<br>
+
+# 4. Ä«ÇÁÄ« ±â´É ±¸Çö
+- Ä«ÇÁÄ«¿¡ ´ëÇÑ Á÷Á¢ÀûÀÎ ±â´É ±¸ÇöÀº ÇÏÁö ¾ÊÀ½
+- ÀÌ¹Ì ÇÃ·³ÀÇ `DriverCarInfo_KafkaSink`¸¦ ÅëÇØ ¼öÁıÇÑ ½Ç½Ã°£ µ¥ÀÌÅÍ¸¦ Ä«ÇÁÄ«¿¡ Àü¼ÛÇÏ´Â ±â´É ±¸ÇöÀº ³¡³µ±â ¶§¹®
+- Ä«ÇÁÄ« ¸í·É¾î¸¦ ÀÌ¿ëÇØ Ä«ÇÁÄ«ÀÇ `ºê·ÎÄ¿` ¾È¿¡ ¾ÕÀ¸·Î »ç¿ëÇÏ°Ô µÉ ÅäÇÈ »ı¼º & Ä«ÇÁÄ«ÀÇ `Producer` ¸í·ÉÀ» ÅëÇØ ÅäÇÈ¿¡ µ¥ÀÌÅÍ Àü¼Û
+- ÅäÇÈ¿¡ µé¾î°£ µ¥ÀÌÅÍ¸¦ ´Ù½Ã Ä«ÇÁÄ«ÀÇ `Consumer` ¸í·É¾î·Î ¼ö½Å
+
+<br>
+
+## 1) Ä«ÇÁÄ« Topic »ı¼º
+- Ä«ÇÁÄ«°¡ ¼³Ä¡µÇ¾î ÀÖ´Â Server02¿¡¼­ Ä«ÇÁÄ«ÀÇ `CLI` ¸í·É¾î¸¦ ÀÌ¿ëÇØ ´Ù¾çÇÑ Ä«ÇÁÄ« ±â´É »ç¿ë
+- PuTTY·Î Server02¿¡ SSH Á¢¼Ó - root °èÁ¤À¸·Î ·Î±×ÀÎ
+- ¾Æ·¡ Ä«ÇÁÄ« ÅäÇÈ ¸í·É¾î·Î SmartCar-Topic »ı¼º
+```bash
+kafka-topics --create --zookeeper server02.hadoop.2181 --replication-factor 1 --partitions 1 --topic SmartCar-Topic
+```
+
+<br>
+
+- À§ ¸í·É¾î ½ÇÇàÇÏ°í `Created Topic SmartCar-Topic` ¸Ş½ÃÁö°¡ ³ª¿À¸é ÅäÇÈÀÌ Á¤»óÀûÀ¸·Î »ı¼ºµÈ °Í
+- `--zookeeper` ¿É¼Ç
+	- ÅäÇÈÀÇ ¸ŞÅ¸ Á¤º¸µéÀÌ ZookeeperÀÇ Z³ëµå¿¡ ¸¸µé¾îÁö°í °ü¸°µÊ
+	- replication-factor ¿É¼ÇÀº Ä«ÇÁÄ«¸¦ ´ÙÁß Broker·Î ¸¸µé°í, Àü¼ÛÇÑ µ¥ÀÌÅÍ¸¦ replication-factor °³¼ö¸¸Å­ º¹Á¦ÇÏ°Ô µÊ. ÆÄÀÏ·µ ÇÃÁ§Àº ´ÜÀÏ Ä«ÇÁÄ« ºê·ÎÄ¿ -> º¹Á¦ °è¼ö 1
+	- partitions ¿É¼ÇÀº ÇØ´ç Topic¿¡ µ¥ÀÌÅÍµéÀº partitions °³¼ö¸¸Å­ ºĞ¸®ÀúÀåµÊ. ¾ÆÁß Broker¾Ö¼­ ¾²±â/ÀĞ±â ¼º´É Çâ»óÀ» À§ÇØ »ç¿ë
+- `--topic` ¿É¼Ç
+	- ÆÄÀÏ·µ È¯°æ¿¡¼­ »ç¿ëÇÒ ÅäÇÈ¸í Á¤ÀÇ
+	- `SmartCar-Topic` ÀÌ¶ó´Â ÀÌ¸§À¸·Î ÅäÇÈ Á¤ÀÇ
+	- ÇÃ·³ÀÇ DriverCarInfo_KafkaSink¿¡¼­ ¼³Á¤ÇÑ ÅäÇÈ ÀÌ¸§°ú °°¾Æ¾ß ÇÔ
+
+<br>
+
+## 2) Ä«ÇÁÄ« Producer »ç¿ë
+- Server02 SSH Á¢¼Ó ÈÄ ¾Æ·¡ ¸í·É ½ÇÇà
+```bash
+kafka-console-producer --broker-list server02.hadoop.com:9092 -topic SmartCar-Topic
+```
