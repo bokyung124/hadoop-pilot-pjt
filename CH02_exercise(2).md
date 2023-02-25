@@ -272,6 +272,7 @@ ln -s /usr/java/jdk1.8.0_181-cloudera/bin/java /usr/bin/java
 java -version
 ``` 
 - 1.8.0_181 확인   
+
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDuWeE%2FbtrWv8B0NEs%2FjCK9ED53KM8zf0y46hF8G0%2Fimg.png)
 
 <br>
@@ -317,7 +318,8 @@ tail -f SmartCarDriverInfo.log
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F0Y5EV%2FbtrWzRZA0Hx%2FR9Jloh0FrZuJ8vSS2TO9L0%2Fimg.png)   
 <br>
 
-- __데이터 형식 정의__
+- __데이터 형식 정의__   
+
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbiqEGG%2FbtrWx8Hv5jU%2FWCKW0a6yZ6GUqpKRrZKitK%2Fimg.png)
 
 <br>
@@ -346,5 +348,6 @@ tail -f SmartCarStatusInfo_20160101.txt
 
 <br>
 
-- 데이터 형식 정의
+- __데이터 형식 정의__   
+
 ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbu0fNq%2FbtrWx5c0MEM%2FU9JS4am5kifZ5iqA58Bk50%2Fimg.png)
