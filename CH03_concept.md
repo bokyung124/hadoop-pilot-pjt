@@ -9,11 +9,13 @@
 <br>
 
 ## 2) 주요 구성요소
-- `Source` : 다양한 원천 시스템의 데이터를 수집하기 위해 Avro, Thrift, JMS, Spool Dir, Kafka 등 컴포넌트 제공 / 수집한 데이터 Channel로 전달
-- `Channel` : Source와 Sink 연결 / 데이터를 버퍼링하는 컴포넌트로 메모리, 파일, 데이터베이스를 채널의 저장소로 활용
-- `Sink` : 수집한 데이터를 Channel로부터 전달받아 최종 목적지에 저장하기 위한 기능 / HDFS, Hive, Logger, Avro, ElasticSearch, Thrift 등 제공
-- `Interceptor` : Source와 Channel 사이에서 데이터 필터링 및 가공하는 컴포넌트 / Timestamp, Host, Regex Filtering 등 기본 제공 + 필요 시 사용자 정의 Interceptor 추가
-- `Agent` : Source → (Interceptor) → Channel → Sink 컴포넌트 순으로 구성된 작업 단위 / 독립된 인스턴스로 생성
+|구성요소|설명|
+|---|---|
+|Source| 다양한 원천 시스템의 데이터를 수집하기 위해 Avro, Thrift, JMS, Spool Dir, Kafka 등 컴포넌트 제공 <br> 수집한 데이터 Channel로 전달|
+| Channel | Source와 Sink 연결 <br> 데이터를 버퍼링하는 컴포넌트로 메모리, 파일, 데이터베이스를 채널의 저장소로 활용|
+|Sink|수집한 데이터를 Channel로부터 전달받아 최종 목적지에 저장하기 위한 기능 <br> HDFS, Hive, Logger, Avro, ElasticSearch, Thrift 등 제공|
+|Interceptor |Source와 Channel 사이에서 데이터 필터링 및 가공하는 컴포넌트 <br> Timestamp, Host, Regex Filtering 등 기본 제공 <br> + 필요 시 사용자 정의 Interceptor 추가|
+|Agent|Source → (Interceptor) → Channel → Sink 컴포넌트 순으로 구성된 작업 단위 <br> 독립된 인스턴스로 생성|
 
 </br>
 
@@ -87,10 +89,12 @@
 <br>
 
 ## 2) 주요 구성요소
-- `Broker` : 카프카의 서비스 인스턴스. 다수의 Broker를 클러스터로 구성하고 Topic이 생성되는 물리적 서버
-- `Topic` : Broker에서 데이터의 발행/소비 처리를 위한 저장소
-- `Provider` : Broker의 특정 Topic에 데이터를 전송(발행)하는 역할. 카프카 라이브러리를 통해 구현
-- `Consumer` : Broker의 특정 Topic에서 데이터를 수신(소비)하는 역할. 카프카 라이브러리를 통해 구현
+|구성요소|설명|
+|---|---|
+|Broker| 카프카의 서비스 인스턴스 <br> 다수의 Broker를 클러스터로 구성하고 Topic이 생성되는 물리적 서버|
+|Topic| Broker에서 데이터의 발행/소비 처리를 위한 저장소|
+|Provider|Broker의 특정 Topic에 데이터를 전송(발행)하는 역할 <br> 카프카 라이브러리를 통해 구현|
+|Consumer|Broker의 특정 Topic에서 데이터를 수신(소비)하는 역할 <br> 카프카 라이브러리를 통해 구현|
 
 <br>
 
@@ -138,6 +142,7 @@
   → 자원을 효율적으로 이용할 수 있음
 
 ![kafka5](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdLfb9Y%2FbtrWS1Oiqj3%2Fe3vIsmeuGDCkAVAVsom3PK%2Fimg.png)
+
 <br>
 
 # 3. 수집 파일럿 실행 1단계 - 수집 아키텍처
