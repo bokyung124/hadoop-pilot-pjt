@@ -367,14 +367,14 @@ kafka-console-consumer --bootstrap-server server02.hadoop.com:9092 --topic Smart
 ## 1) SmartCar 로그 시뮬레이터 작동
 - 2016년 1월 1일에 3대의 스마트카 로그만 발생시켜 보기
 
-### 1) Server02에 SSH 접속 후 bigdata.smartcar.loggen-1.0.jar가 위치한 곳으로 이동
+#### 1) Server02에 SSH 접속 후 bigdata.smartcar.loggen-1.0.jar가 위치한 곳으로 이동
 ```bash
 cd /home/pilot-pjt/working
 ```
 
 <br>
 
-### 2) 다음 명령으로 2개의 스마트카 로그 시뮬레이터를 백그라운드 방식으로 실행
+#### 2) 다음 명령으로 2개의 스마트카 로그 시뮬레이터를 백그라운드 방식으로 실행
 ```bash
 java -cp bigdata.smartcar.loggen-1.0.jar com.wikibook.bigdata.smartcar.loggen.CarLogMain 20160101 3 &
 java -cp bigdata.smartcar.loggen-1.0.jar com.wikibook.bigdata.smartcar.loggen.DriverLogMain 20160101 3 &
@@ -386,7 +386,7 @@ java -cp bigdata.smartcar.loggen-1.0.jar com.wikibook.bigdata.smartcar.loggen.Dr
 
 <br>
 
-### 3) 정상적으로 시뮬레이터가 작동되고 있는지 아래 내용으로 확인
+#### 3) 정상적으로 시뮬레이터가 작동되고 있는지 아래 내용으로 확인
 - /home/pilot-pjt/working/SmartCar 경로에 SmartCarStatusInfo_20160101.txt 파일이 생성됐는지 확인
 - 파일의 내용 확인해보면 3대의 스마트카 상태 정보가 기록된 것을 볼 수 있음
 ```bash
@@ -409,7 +409,7 @@ tail -f SmartCarDriverInfo.log
 
 <br>
 
-### 4) /home/pilot-pjt/working/SmartCar 경로에 만들어진 SmartCarStatusInfo_20160101.txt 파일을 플럼 SmartCarInfo 에이전트의 SpoolDir 경로로 옮김
+#### 4) /home/pilot-pjt/working/SmartCar 경로에 만들어진 SmartCarStatusInfo_20160101.txt 파일을 플럼 SmartCarInfo 에이전트의 SpoolDir 경로로 옮김
 ```bash
 mv /home/pilot-pjt/working/SmartCar/SmartCarStatusInfo_20160101.txt /home/pilot-pjt/working/car-batch-log/
 ```
@@ -446,7 +446,7 @@ kafka-console-consumer --bootstrap-server server02.hadoop.com:9092 --topic Smart
 
 ## 4) 수집 기능 점검
 
-### 1) 스마트카의 상태 정보 로그 파일이 플럼의 표준 출력 로그로 전송됐는지 리눅스 tail 명령어로 확인
+#### 1) 스마트카의 상태 정보 로그 파일이 플럼의 표준 출력 로그로 전송됐는지 리눅스 tail 명령어로 확인
 ```bash
 tail -f /var/log/flume-ng/flume-cmf-flume-AGENT-server02.hadoop.com.log
 ```
@@ -461,7 +461,7 @@ tail -f /var/log/flume-ng/flume-cmf-flume-AGENT-server02.hadoop.com.log
 
 <br>
 
-### 2) 스마트카 운전자의 실시간 운전 정보인 DriverCarInfo가 정상적으로 수집되는지 확인
+#### 2) 스마트카 운전자의 실시간 운전 정보인 DriverCarInfo가 정상적으로 수집되는지 확인
 - 앞서 실행했던 카프카의 Consumer 콘솔창 확인
 ```bash
 kafka-console-consumer --bootstrap-server server02.hadoop.com:9092 --topic SmartCar-Topic --partition 0
@@ -475,7 +475,7 @@ kafka-console-consumer --bootstrap-server server02.hadoop.com:9092 --topic Smart
 
 <br>
 
-### 3) 백그라운드로 실행했던 스마트카 로그 시뮬레이터 모두 종료
+#### 3) 백그라운드로 실행했던 스마트카 로그 시뮬레이터 모두 종료
 ```bash
 ps -ef | grep smartcar.log
 ``` 
