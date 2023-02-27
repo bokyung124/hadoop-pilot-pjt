@@ -106,4 +106,17 @@
 <br>
 
 - 1.x 아키텍처의 문제점을 개선하기 위한 다양한 컴포넌트 교체 및 추가
-- 클라이언트가 
+- 클라이언트가 DataNode로부터 파일을 읽고 쓰기 전에 NameNode를 참조하게 되는데, 이때 1.x 버전과 다르게 `Active`/`Standby`로 이중화 되어있음을 알 수 있음
+- 또한, NameNode의 메모리에서 관리되는 파일들의 네임스페이스 정보를 주기적으로 관리하기 위해 `JournalNode`가 추가되었고, `주키퍼`까지 사용됨
+
+<br>
+
+- 가장 큰 변화는 JobTracker, TaskTracker 대신 `Resource Manager`, `Node Manager`가 생긴 것
+- `Resource Manager`는 Node Manager의 리소스 현황들을 종합적으로 수집해가며 작업 실행을 위한 최적의 DataNode를 찾아주어 효율적인 잡 스케줄링 가능해짐 <br>
+\+ 1.x에서 발생했던 DataNode의 리소스 불균형 현상 문제도 해결
+- `NodeManager`의 Container, Application Master는 1.x의 맵리듀스 잡 외에도 다양한 애플리케이션을 DataNode에서 실행 및 관리할 수 있게 확장됨
+- 이렇게 변화된 하둡 2.x 플랫폼을 `YARN`이라고 함
+
+<br>
+
+## 5) 하둡 활용 방안
