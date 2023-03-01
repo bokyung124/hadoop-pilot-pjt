@@ -231,3 +231,4 @@
 <br>
 
 # 5. 적재 환경 구성
+![](img/CH04/collection2.png)
