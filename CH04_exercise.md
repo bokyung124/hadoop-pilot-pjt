@@ -343,4 +343,35 @@ java -cp bigdata.smartcar.loggen-1.0.jar com.wikibook.bigdata.smartcar.loggen.Ca
 
 <br>
 
-3) 
+3) /home/pilot-pjt/working/SmartCar 경로에 SmartCarStatusInfo_20160101.txt 파일 생성됐는지 확인
+- 2016년 1월 1일 날짜로 100대의 스마트카 상태 정보가 기록된 것을 확인할 수 있음
+- 최종 로그 파일의 크기는 100MB이고, 생성되기까지 1~2분 정도 걸림
+
+```bash
+cd /home/pilot-pjt/working/SmartCar
+tail -f SmartCarStatusInfo_20160101.txt
+```
+
+![](img/CH04/hdfs%20%EC%8A%A4%EB%A7%88%ED%8A%B8%EC%B9%B4%20%EC%83%81%ED%83%9C%EC%A0%95%EB%B3%B4%ED%8C%8C%EC%9D%BC%20%ED%99%95%EC%9D%B81.png)
+
+<br>
+
+## 4) 플럼 이벤트 작동
+- 플럼의 SmartCar 에이전트가 정상적으로 작동하고 있다면, SpoolDir이 참조하고 있는 /home/pilot-pjt/working/car-batch-log 경로에 파일이 생성됨과 동시에 플럼의 파일 수집 이벤트가 작동
+
+<br>
+
+1) /home/pilot-pjt/working/SmartCar 경로에 만들어진 SmartCarStatusInfo_20160101.txt 파일을 플럼의 SmartCarInfo의 SpoolDir 경로인 /home/pilot-pjt/working/car-batch-log로 옮겨서 플럼의 File 이벤트가 작동되도록 함
+```bash
+mv /home/pilot-pjt/working/SmartCar/SmartCarStatusInfo_20160101.txt /home/pilot-pjt/working/car-batch-log/
+```
+
+<br>
+
+2) 플럼의 실행 로그를 통해 SmartCarInfo_Agent가 정상적으로 작동하는지 확인
+```bash
+cd /var/log/flume-ng/
+tail -f /var/log/flume-ng/flume-cmf-flume-AGENT-server02.hadoop.com.log
+```
+
+![](img/CH04/)
