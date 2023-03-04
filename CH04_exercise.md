@@ -374,4 +374,47 @@ cd /var/log/flume-ng/
 tail -f /var/log/flume-ng/flume-cmf-flume-AGENT-server02.hadoop.com.log
 ```
 
-![](img/CH04/)
+![](img/CH04/%ED%94%8C%EB%9F%BC%EC%9D%B4%EB%B2%A4%ED%8A%B8%20%EC%9E%91%EB%8F%99.png)
+
+- 위의 이미지와 같이 특별한 에러 없이 `Creating /pilot-pjt/collect ... ` 또는 `Updating checkpoint for file: ... `메시지가 나타나면 정상적으로 HDFS에 적재중인 것
+
+- 위의 이미지와 같이 `...BucketWriter: Closing /pilot-pjt/...`, `BucketWriter: Renaming /pilot-pjt/...`, `...Writer callback called.` 라는 메시지가 보이면 모든 HDFS 적재가 성공적으로 끝난 것
+
+<br>
+
+## 5) HDFS 명령어 확인
+- HDFS CLI 명령어로도 적재되고 있는 스마트카 로그 파일 확인 가능
+- ls 명령 중 `-R` 옵션을 지정하면 해당 하위 디렉터리의 모든 파일 목록 볼 수 있음
+
+```bash
+hdfs dfs -ls -R /pilot-pjt/collect/car-batch-log/
+```
+
+![](img/CH04/hdfs%20%EC%A0%81%EC%9E%AC%EB%90%98%EA%B3%A0%20%EC%9E%88%EB%8A%94%20%EC%8A%A4%EB%A7%88%ED%8A%B8%EC%B9%B4%20%EB%A1%9C%EA%B7%B8%ED%8C%8C%EC%9D%BC.png)
+
+- 위의 이미지를 보면 스마트카 상태 정보 파일(100MB) 한 개가 64MB와 46MB의 2개로 나눠져 HDFS의 "wrk_date=작업일자" 파티션 디렉터리에 적재된 것을 확인할 수 있음
+
+<br>
+
+#### **HDFS에 적재된 스마트카 상태 정보 파일 내용 직접 확인**
+- 적재된 일자와 시간에 따라 파일 경로와 최종 파일명이 다를 수 있음
+```bash
+hdfs dfs -cat "출력된 디렉터리/파일명.log"
+
+# 필자 환경에서 단순 데이터 확인
+hdfs dfs -tail /pilot-pjt/collet/car-batch-log/wrk_date=20230109/car-batch-log.1673203446499.log
+```
+![](img/CH04/hdfs%20%EC%8A%A4%EB%A7%88%ED%8A%B8%EC%B9%B4%20%EC%83%81%ED%83%9C%EC%A0%95%EB%B3%B4%ED%8C%8C%EC%9D%BC%20%ED%99%95%EC%9D%B81.png)   
+![](img/CH04/hdfs%20%EC%8A%A4%EB%A7%88%ED%8A%B8%EC%B9%B4%20%EC%83%81%ED%83%9C%EC%A0%95%EB%B3%B4%ED%8C%8C%EC%9D%BC%20%ED%99%95%EC%9D%B82.png)
+
+- 이미지를 보면 각 행의 내용이 모두 "20160101"로 시작됨
+- 로그 시뮬레이터 설정으로 스마트카 상태 정보 데이터를 "2016년 1월 1일"로 발생하게 했기 때문
+- 또한, 각 행의 끝에 붙은 "20230109"는 수집일자 정보로서, 플럼의 Interceptor가 붙여넣은 추가 정보
+
+<br>
+
+- 백그라운드로 실행했던 스마트카 로그 시뮬레이터 모두 종료
+```bash
+ps -ef | grep smartcar.log
+kill -9 [pid]
+```
