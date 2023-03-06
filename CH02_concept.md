@@ -79,4 +79,3 @@
 - 빅데이터 자동화 관리 툴
 - 하둡을 포함한 에코시스템 17개 편리하게 설치 및 관리
 ![cm](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdgrhZY%2FbtrUKYOQmH2%2Fkn9pfO6wlfXFhPPAYhI7U1%2Fimg.png)
-
