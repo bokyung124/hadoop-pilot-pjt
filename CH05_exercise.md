@@ -1,4 +1,5 @@
-# 1. HBase 설치
+# 1. 실시간 적재 환경 구성
+## 1) HBase 설치
 - CM 홈 - [서비스 추가] - [HBase] 선택 - [계속]
 ![](img/CH05/hbase%20%EC%84%A4%EC%B9%98.png)
 
@@ -62,7 +63,7 @@ http://server02.hadoop.com:16010
 
 <br>
 
-# 2. 레디스 설치
+## 2) 레디스 설치
 - CM의 소프트웨어 컴포넌트로 포함되어 있지 않기 때문에 레디스 설치 패키지로 Server02에 직접 설치
 
 <br>
@@ -165,7 +166,7 @@ redis-cli
 
 <br>
 
-# 3. 스톰 설치
+## 3) 스톰 설치
 - Server02에 root 계정으로 접속해서 스톰 설치를 위한 tar 파일 다운로드
 ```bash
 cd /home/pilot-pjt
@@ -299,7 +300,7 @@ http://server02.hadoop.com:8088
 
 <br>
 
-# 4. 실시간 적재 기능 구현
+# 2. 실시간 적재 기능 구현
 - 스톰의 Spout과 Bolt의 프로그램 구현 단계
 - 운전자의 운행 정보가 실시간으로 카프카에 적재되고, 이를 스톰의 Spout가 읽어서 Bolt로 전달
 - 아래 그림은 파일럿 프로젝트에서 실시간 처리와 적재를 위한 스톰 Topology
@@ -1110,3 +1111,98 @@ public class RedisClient extends Thread{
     - key(날짜)에 해당하는 과속 차량 정보가 발생하면 즉시 가져와서 출력
 - ⓶
     - 레디스에서 가져온 key의 데이터 삭제
+
+<br>
+
+# 3. HBase 테이블 생성
+- 파일럿 플젝에서 수집한 운전자의 모든 운행 정보는 HBase에 적재됨
+- 아래 코드는 스톰의 HBase-Bolt 관련 소스코드를 일부 발췌한 것으로, 수신받은 튜플 데이터(운전자 데이터)를 HBase에 모두 적재
+
+<br>
+
+- **HBase의 HTable 구성 정보 - SmartCarDriverTopology.java**
+```java
+// HBase Bolt
+	TupleTableConfig hTableConfig = new TupleTableConfig("DriverCarInfo", "r_key");  // ⓵
+	hTableConfig.setZkQuorum("server02.hadoop.com");
+	hTableConfig.setZkClientPort("2181");
+	hTableConfig.setBatch(false);
+						 // ⓶      ⓷
+	hTableConfig.addColumn("cf1", "date");
+	hTableConfig.addColumn("cf1", "car_number");
+	hTableConfig.addColumn("cf1", "speed_pedal");
+	hTableConfig.addColumn("cf1", "break_pedal");
+	hTableConfig.addColumn("cf1", "steer_angle");
+	hTableConfig.addColumn("cf1", "direct_light");
+	hTableConfig.addColumn("cf1", "speed");
+	hTableConfig.addColumn("cf1", "area_number");
+		
+	HBaseBolt hbaseBolt = new HBaseBolt(hTableConfig);
+	driverCarTopologyBuilder.setBolt("HBASE", hbaseBolt, 1).shuffleGrouping("splitBolt");
+```
+- ⓵
+	- 실시간 데이터를 적재할 HBase 테이블명 `DriverCarInfo`와 로우키명 `r_key` 설정
+- ⓶
+	- `DriverCarInfo` 테이블에서 사용하는 칼럼 패밀리명 `cf1` 설정
+- ⓷
+	- 칼럼 패밀리명 `cf1`에서 사용할 필드명 설정
+
+<br>
+
+- 위의 코드가 정상적으로 실행되려면 설정한 HBase 테이블(DriverCarInfo), 로우키(r_key), 칼럼패밀리(cf1)가 HBase 서버 상에 생성되어 있어야 함
+- Sever02에 접속해 아래 명령을 실행하고, `CREATE, Table Name: default: DriverCarInfo..` 메시지 출력되는지 확인
+```bash
+hbase org.apache.hadoop.hbase.util.RegionSplitter DriverCarInfo HexStringSplit -c 4 -f cf1
+```
+- 해당 명령은 HBase에 DriverCarInfo 테이블 생성
+- RegionSplitter를 이용했고, 칼럼패밀리로 `cf1`을 사용하는 24개의 Region을 미리 생성하기 위한 옵션 지정함
+- 이때 4개의 Region에 접근하는 방식은 로우키의 HexString 값을 이용하도록
+- 이처럼 테이블의 Region을 미리 분리해놓는 이유: 초기 대량 데이터 발생을 고려해 여러 개의 Region을 미리 만들어 성능과 안정성을 확보할 수 있기 때문
+- 또한, Region이 특정 크기에 도달하면 자동으로 분리(샤딩)되는데, 이러한 분리 과정에서 서비스가 일시적으로 중단되는 현상도 미연에 방지할 수 있음
+![](img/CH05/hbase%20%ED%85%8C%EC%9D%B4%EB%B8%94%20%EC%83%9D%EC%84%B1.png)
+
+<br>
+
+# 4. 스톰 Topology 배포
+![](img/CH05/%EC%8B%A4%EC%8B%9C%EA%B0%84%EC%A0%81%EC%9E%AC%EA%B8%B0%EB%8A%A5.png)
+- 스톰 Topology는 위 그림에 나와있는 Spout, Bolt의 구성과 동작 방식 등을 정의한 하나의 자바 프로그램
+
+<br>
+
+- 스톰 Topology 작성이 완료되면 **Nimbus**를 통해 해당 Topology가 **Supervisor**에 배포되고, Supervisor의 **worker** 위에 실시간 데이터를 처리하기 위한 스톰의 런타임 환경이 생성됨
+
+<br>
+
+### **운전자의 실시간 운행 정보 처리하는 스톰 Topology 배포**
+#### 1) 스톰에서 사용하는 자바 프로그램 소스를 미리 컴파일해서 패키징한 파일 -> Server02에 업로드
+- 파일질라 사용
+
+<br>
+
+#### 2) 업로드한 파일에 포함된 스톰의 Topology 파일을 storm 명령을 통해 **DriverCarInfo**라는 이름으로 배포
+- 배포하기 전 스톰 Nimbus, Supervisor, Ui 서버가 정상 실행 중인지 확인
+```bash
+cd /home/pilot-pjt/working   
+storm jar bigdata.smartcar.storm-1.0.jar com.wikibook.bigdata.smartcar.storm.SmartCarDriverTopology DriverCarInfo
+```
+- 마지막에 `o.a.s.StormSubmitter - Finishd submitting topology: DriverCarInfo` 메시지 출력되는지 확인
+![](img/CH05/%EC%8A%A4%ED%86%B0%20topology%20%ED%8C%8C%EC%9D%BC%20%EB%B0%B0%ED%8F%AC1.png)
+![](img/CH05/%EC%8A%A4%ED%86%B0%20topology%20%ED%8C%8C%EC%9D%BC%20%EB%B0%B0%ED%8F%AC2.png)
+
+<br>
+
+#### 3) 스톰 관리자 UI로 Topology가 정상적으로 배포되었는지 확인
+- Topology summary의 DriverCarInfo라는 Topology가 활성화되었는지 확인   
+http://server02.hadoop.com:8088
+![](img/CH05/%EC%8A%A4%ED%86%B0%20topology%20%EB%B0%B0%ED%8F%AC%20%ED%99%95%EC%9D%B8.png)
+
+- [DriverCarInto Topology]를 들어가면 Topology뿐 아니라, 카프카-Spout, 에스퍼-Bolt, 레디스-Bolt 등의 상태 모니터링 가능
+- [Show Visualization] 클릭하면 배포한 Topology의 구조부터 데이터 처리량 실시간으로 모니터링 가능
+
+<br>
+
+#### 4) 스톰 Topology 제거해야 할 경우 다음 `kill` 명령 이용
+```bash
+storm kill "Topology 이름"
+```
+
