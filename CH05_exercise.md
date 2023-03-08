@@ -1206,3 +1206,101 @@ http://server02.hadoop.com:8088
 storm kill "Topology 이름"
 ```
 
+<br>
+
+# 5. 실시간 적재 기능 테스트
+- 실시간 적재 기능 테스트를 위해 스마트카 운전자의 실시간 운행정보를 발생시키는 로그 시뮬레이터 작동
+- 해당 로그 파일을 플럼이 수집해서 카프카에 전송하고, 스톰이 다시 수신받아 모든 운행 데이터를 HBase에 적재
+- 그 중 에스퍼의 속도 위반 룰에 감지된 차량은 레디스로 적재
+
+<br>
+
+## 1) 로그 시뮬레이터 작동
+- 로그 시뮬레이터가 설치되어 있는 Server02에 접속해서 **DriverLogMain**작동
+- 2016년 1월 3일 10대의 스마트카 운전자 정보만 생성해 테스트
+- 로그가 생성됨과 동시에 플럼의 수집 이벤트가 작동하면 **플럼 -> 카프카 -> 스톰 -> HBase** 순으로 데이터 수집 및 적재됨
+```bash
+cd /home/pilot-pjt/working
+java -cp bigdata.smartcar.loggen-1.0.jar com.wikibook.bigdata.smartcar.loggen.DriverLogMain 20160103 10 &
+```
+![](img/CH05/driverlogmain%20%EC%9E%91%EB%8F%99.png)
+
+<br>
+
+- 운전자의 실시간 로그가 정상적으로 발생하는지 확인
+```bash
+cd /home/pilot-pjt/working/driver-realtime-log
+tail -f SmartCarDriverInfo.log
+```
+![](img/CH05/%EC%9A%B4%EC%A0%84%EC%9E%90%20%EC%8B%A4%EC%8B%9C%EA%B0%84%20%EB%A1%9C%EA%B7%B8%20%EB%B0%9C%EC%83%9D.png)
+
+<br>
+
+## 2) HBase 적재 데이터 확인
+#### 1) HBase 쉘의 `count`명령으로 실시간으로 적재되고 있는 운전자 정보 확인
+```bash
+hbase shell
+hbase(main):001:0> count 'DriverCarInfo'
+```
+- DriverCarInfo 테이블에 적재된 데이터의 로우 수를 1000 단위로 출력
+![](img/CH05/%EC%8B%A4%EC%8B%9C%EA%B0%84%20%EC%A0%81%EC%9E%AC%20%EC%9A%B4%EC%A0%84%EC%9E%90%20%EC%A0%95%EB%B3%B4%20%ED%99%95%EC%9D%B8.png)
+- `count` 명령에 따른 row 값을 보면 **Split Bolt**에서 구현한 대로 로우키 값이 **타임스탬프-리버스값 + 차량번호** 형식으로 적재된 것을 볼 수 있음
+
+<br>
+
+#### 2) `scan` 명령으로 DriverCarInfo 테이블에 적재된 칼럼 기반 구조의 데이터 살펴보기
+- 그냥 scan 명령을 내리면 모든 데이터가 조회되므로 `LIMIT` 옵션으로 20개만 조회
+```bash 
+hbase(main):001:0> scan 'DriverCarInfo;, {LIMIT=>20}
+```
+![](img/CH05/%EC%BB%AC%EB%9F%BC%20%EA%B8%B0%EB%B0%98%20%EB%8D%B0%EC%9D%B4%ED%84%B0%2020%EA%B0%9C%EB%A7%8C.png)
+- HBase의 칼럼 기반 테이블 구조로 되어있음
+
+<br>
+
+- 표로 표현하면 아래와 같음
+![](img/CH05/hbase%20%ED%91%9C.png)
+- 로우키와 칼럼패밀리(cf1)을 기준으로 **RowKey -> Column -> Family -> Field -> Version -> Value** 순으로 데이터 봄
+- `Version`은 표에는 없지만, Filed의 Value 데이터가 바뀔 때마다 타임스탬프를 통해 버전 관리
+- 칼럼 패밀리를 여러 개로 생성해서 특징이 유사한 칼럼들을 그루핑해서 데이터를 관리할 수도 있음
+
+<br>
+
+- 표시된 데이터 중 특정 로우키 하나를 선택해서 scan 명령의 조건절 추가해보기
+```bash
+scan 'DriverCarInfo', {STARTROW=>'00012230106102-X0005', LIMIT=>1}
+```
+![](img/CH05/scan%20%EC%A1%B0%EA%B1%B4%EC%A0%88%20%EC%B6%94%EA%B0%80.png)
+- **car_number**: X0005 -> 스마트카 차량 번호가 X0005인 운전자의 
+- **date**: 20160103221000 -> 2016년 1월 3일 22시 10분 00초 운행 정보는
+- **speed**: 20 -> 시속 20km/h로 주행
+- **speed_pedal**: 0 -> 가속 페달을 밟지 않은 상태
+- **steer_angle**: F -> 핸들은 직진 중
+- **break_pedal**: 1 -> 브레이크 페달을 1단계 진행
+- **direct_light**: N -> 깜박이는 켜지 않은 상태
+- **area_number**: D01 -> D01 지역을 운행
+
+<br>
+
+- 2016년 1월 3일 E08 지역을 운행했던 모든 스마트카 운전자의 차량번호와 지역번호 출력
+- 날짜 조건 이용 방법) 테이블의 타임스탬프 이용 / 날짜 필드 직접 이용 / **로우키에 포함된 날짜 정보 이용**
+```bash
+scan 'DriverCarInfo', {COLUMNS=>['c1:car_number', 'cf1:area_number'], FILTER=>"RowFilter(=, 'regexstring:30106102') AND SingleColumnValueFilter('cf1', 'area_number', =, 'regexstring:E08')"}
+```
+![](img/CH05/scan%20%EC%A1%B0%EA%B1%B4%EC%A0%882.png)
+
+> hbase> scan 'table 이름', {COLUMNS=>['패밀리이름:컬럼이름', '패밀리이름:컬럼이름'], FILTER=>"ROWFILTER(=, 'regexstring:30106102') AND SingleCloumnValueFilter('cf1', 'area_number', =, 'regexstring:E08')"}   
+> COLUMNS: 조회할 컬럼 선택   
+> FILTER: 이용할 필터   
+> ROWFILTER: Row Key에서 부분문자열 조회 -> row key에 '30106102'가 포함된 데이터만 조회   
+> SingleColumnValueFilter: value 기반으로 매칭하여 cell 반환 -> area_number가 E08인 데이터만 조회   
+
+<br>
+
+- HBase 웹관리자에 접속해서 적재한 데이터가 앞서 실행했던 `Pre-Split` 명령에 의해 2개의 HRegionServer로 골고루 분산 적재됐는지 확인   
+http://server02.hadoop.com:16010/
+
+<br>
+
+## 3) 레디스에 적재된 데이터 확인
+- 레디스에는 스마트카 운전자 중 과속한 차량의 정보 들어있음
