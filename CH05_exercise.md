@@ -1304,3 +1304,73 @@ http://server02.hadoop.com:16010/
 
 ## 3) 레디스에 적재된 데이터 확인
 - 레디스에는 스마트카 운전자 중 과속한 차량의 정보 들어있음
+- 스톰의 에스퍼 Bolt에서 에스퍼의 EPL을 이용해 일자별로 과속한 스마트카를 찾아내는 기능 구현했음
+- **레디스 CLI의 `smembers` 명령을 통해 실시간 과속 차량 정보 확인**
+- 아래와 같이 server02에서 **201601013**을 키로 set 데이터 타입으로 적재되어있는 과속 차량 리스트 조회
+```bash
+redis-cli
+> smembers 20160103
+```
+![](img/CH05/redis_%EA%B3%BC%EC%86%8D%ED%95%9C%20%EC%9A%B4%EC%A0%84%EC%9E%90%20-%20%EB%82%A0%EC%A7%9C%EB%A1%9C%20%EC%A1%B0%ED%9A%8C.png)
+- 3대의 스마트카 차량이 과속한 것을 감지
+
+<br>
+
+## 4) 레디스 클라이언트 애플리케이션 작동
+- 레디스 클라이언트 애플리케이션은 레디스로부터 2016년 1월 3일에 발생되는 과속 차량 정보를 10초 간격으로 가져오는 프로그램
+- 파일질라로 bigdata.smartcar.redis-1.0.jar 파일을 server02의 /home/pilot-pjt/working 디렉터리에 업로드
+
+<br>
+
+- server02에 접속하여 애플리케이션 실행
+```bash
+cd /home/pilot-pjt/working
+java -cp bigdata.smartcar.redis-1.0.jar com.wikibook.bigdata.smartcar.redis.OverSpeedCarInfo 20160103
+```
+![](img/CH05/redis%20%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8%20%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98%20%EC%9E%91%EB%8F%99.png)
+- 차량번호 'X0005', 'W0010'번에 해당하는 스마트카 두 대가 각각 '2016년 1월 3일 22시 25분 12초', '2016년 1월 3일 23일 54분 28초', '2016년 1월 3일 22시 14분 56초'에 과속 위반 차량으로 발견됨
+- 10초 뒤인 [Try No.2]에서는 과속 차량이 발견되지 않음
+- 해당 애플리케이션을 계속 실행해두면 스톰 및 에스퍼에서 발견한 과속 차량을 실시간으로 감지해서 레디스로부터 가져오게 됨
+
+<br>
+
+- 로그 시뮬레이터 종료
+```bash
+ps -ef | grep smartcar.log
+kill -9 [pid] [pid]
+```
+
+<br>
+
+## 5) 실시간 개발 환경 구성
+- 파일럿 프로젝트의 프로그램 개발 환경 구성
+- [이클립스] 실행 - C://예제소스/bigdata2nd-mastere/workspace/bigdata.smartcar.strom 경로 열기
+- **메이븐(Maven)** 프로젝트 import됨   
+<br>
+
+- com.wikibook.bigdata.smartcar.storm 패키지의 **EsperBolt.java** 파일 선택
+- 37-44번째 줄을 보면 에스퍼의 EPL 쿼리 볼 수 있음
+- SQL과 유사하지만, 42번째 줄의 From 절에서 에스퍼 EPL만의 독특한 함수 볼 수 있음
+![](img/CH05/esperbolt.java%20%EC%88%98%EC%A0%95.png)
+- EPL 쿼리를 보면 차량변호 별로 그루핑해서 최근 30초 동안 평균 속도가 80km/h를 초과한 운전자를 찾는 것
+- `int avgOverSpeed` 변수 값을 수정해서 과속 기준 속도를 변경할 수 있음
+
+<br>
+
+- **메이븐의 `install` 명령을 통해 수정한 소스 빌드하고 패킹**
+- [Package Explorer] - pom.xml 파일 열기
+- 상단 메뉴의 [Run] - [Run As] - [Maven install] 메뉴 선택
+![](img/CH05/maven_install%20%EC%8B%A4%ED%96%89.png)
+- 아래 콘솔창에서 `BUILD SUCCESS` 메시지 확인
+![](img/CH05/maven%20%EC%84%A4%EC%B9%98%EC%99%84%EB%A3%8C.png)
+- 오류 메시지가 뜬다면 현재 파일럿 PC에 맞는 자바 런타임 환경 정보로 수정 필요
+
+<br>
+
+- 빌드가 끝나면 target 디렉터리 밑에 bigdata.smartcar.strom-1.0.jar 파일이 생성될 것 -> server02의 /home/pilot-pjt/working 디렉터리에 업로드
+- 스톰 Topology 재배포
+```bash
+storm kill DriverCarInfo
+storm jar bigdata.smartcar.storm-1.0.jar com.wikibook.bigdata.smartcar.storm.SmartCarDriverTopology DriverCarInfo
+```
+![](img/CH05/storm%20topology%20%EC%9E%AC%EB%B0%B0%ED%8F%AC.png)
