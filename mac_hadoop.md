@@ -30,9 +30,9 @@ source ~/.bash_profile  # 적용
 
 <br>
 
-## 2. JAVA_HOME PATH -> openjdk 11 설정
+## 2. JAVA_HOME PATH -> java 1.8.0_371 설정
 
-```bash
+<!-- ```bash
 vi ~/.bash_profile
 
 export JAVA_HOME=/opt/homebrew/Cellar/openjdk@11/11.0.19/libexec/openjdk.jdk/Contents/Home
@@ -43,14 +43,14 @@ source ~/.bash_profile
 ```bash
 java -version
 # openjdk version "11.0.19" 2023-04-18
-```
+``` -->
 
 
-<!-- https://cwiki.apache.org/confluence/display/HADOOP/Hadoop+Java+Versions
+https://cwiki.apache.org/confluence/display/HADOOP/Hadoop+Java+Versions
 
 - Java 8 설치 권장
 
-```bash
+<!-- ```bash
 brew install cask
 
 brew tap AdoptOpenJDK/openjdk
@@ -58,7 +58,7 @@ brew install --cask adoptopenjdk8
 
 java -version
 # java version "1.8.0_371"
-```
+``` -->
 
 <br>
 
@@ -78,13 +78,13 @@ java -version
 ```
 
 ```bash
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
 
 java -version
-# openjdk version "1.8.0_292"
+# openjdk version "1.8.0_371"
 
 echo $JAVA_HOME
-# /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+# /Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
 ```
 
 <br>
@@ -96,7 +96,7 @@ vi ~/.bash_profile
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home  # 추가
 
 source ~/.bash_profile  # 적용
-``` -->
+```
 
 <br>
 
